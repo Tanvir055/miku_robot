@@ -1,7 +1,7 @@
 {
-      "name": "Fallen Robot",
+      "name": "Miku Robot",
       "description": "Telegram Group Management Bot.",
-      "logo": "https://te.legra.ph/file/72e135da30a1a349f2844.jpg",
+      "logo": "https://telegra.ph/file/89fb35875a865dea1ac2e.jpg",
       "keywords": [
          "telegram",
          "modular",
@@ -61,7 +61,7 @@
       "OWNER_ID": {
          "description": "Your user ID as an integer.",
          "required": true,
-         "value": "1356469075"
+         "value": "1781037279"
       },
       "START_IMG": {
          "description": "Telegraph link of the image which will be shown at start command.",
