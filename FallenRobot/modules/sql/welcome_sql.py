@@ -137,7 +137,7 @@ DEFAULT_WELCOME_MESSAGES = [
     "Rerorerorerorerorero.",
     "{first} just warped into the group!",
     "I..it's..it's just {first}.",
-    "Sugoi, Dekai. {first} Joined!",
+    " 𝑯𝒆𝒚 😊 {first} 🫶 𝘞𝘦𝘭𝘤𝘰𝘮𝘦.🌻",
     "{first}, do you know gods of death love apples?",
     "I'll take a potato chip.... and eat it",
     "Oshiete oshiete yo sono shikumi wo!",
