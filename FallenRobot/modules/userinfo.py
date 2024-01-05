@@ -304,7 +304,7 @@ def info(update: Update, context: CallbackContext):
                                 "ʜᴇᴀʟᴛʜ", url="https://t.me/suggar_support_group/87"
                             ),
                             InlineKeyboardButton(
-                                "ᴅɪꜱᴀꜱᴛᴇʀ", url="https://t.me/suggar_support_group/88"
+                                "ᴅɪꜱᴀꜱᴛᴇʀ", url="https://t.me/suggar_support_group/217"
                             ),
                         ],
                     ]
