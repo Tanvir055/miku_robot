@@ -714,14 +714,14 @@ def main():
                 chat_id=f"@{SUPPORT_CHAT}",
                 photo=START_IMG,
                 caption=f"""
-🔥 {BOT_NAME} ɪs ᴀʟɪᴠᴇ sugar ʙᴀʙʏ...🔥
+🌻 {BOT_NAME} ɪs ᴀʟɪᴠᴇ 🔥
 
-┏•❅────✧❅✦❅✧────❅•┓
+┏•❅───✧❅✦❅✧───❅•┓
 ㅤ★ **ᴘʏᴛʜᴏɴ :** `{y()}`
 ㅤ★ **ʟɪʙʀᴀʀʏ :** `{telever}`
 ㅤ★ **ᴛᴇʟᴇᴛʜᴏɴ :** `{tlhver}`
 ㅤ★ **ᴩʏʀᴏɢʀᴀᴍ :** `{pyrover}`
-┗•❅────✧❅✦❅✧────❅•┛""",
+┗•❅───✧❅✦❅✧───❅•┛""",
                 parse_mode=ParseMode.MARKDOWN,
             )
         except Unauthorized:
