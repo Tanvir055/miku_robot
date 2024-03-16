@@ -1,5 +1,7 @@
 import html
 import random
+import time
+from datetime import datetime
 
 from telegram import MessageEntity, Update
 from telegram.error import BadRequest
@@ -36,12 +38,25 @@ def afk(update: Update, context: CallbackContext):
     else:
         reason = ""
 
+    # Set AFK status in the database
     sql.set_afk(update.effective_user.id, reason)
+
+    # Get the current time
+    afk_time = datetime.now()
+
+    # Inform the user that they are AFK
     fname = update.effective_user.first_name
     try:
         update.effective_message.reply_text("{} is now away!{}".format(fname, notice))
     except BadRequest:
         pass
+
+    # Return the AFK status along with duration and reason
+    afk_message = "I'm currently AFK!\n\n⏰ AFK Since: {}\n\n💬 Reason: {}".format(
+        str(afk_time - afk_time),  # Calculate duration since AFK
+        reason
+    )
+    update.effective_message.reply_text(afk_message)
 
 
 def no_longer_afk(update: Update, context: CallbackContext):
