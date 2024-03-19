@@ -1,7 +1,3 @@
-JustPaste.it
-Afk edit
-User avatar
-@anonymous · 16 Mar 2024
 import html
 import random
 import time
