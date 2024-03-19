@@ -1,7 +1,7 @@
 import html
 import random
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from telegram import MessageEntity, Update
 from telegram.error import BadRequest
@@ -18,6 +18,37 @@ from FallenRobot.modules.users import get_user_id
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
 
+
+def format_timedelta(delta: timedelta) -> str:
+    seconds = delta.seconds
+    if delta.days:
+        seconds += delta.days * 86400
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+
+    if delta.days:
+        if delta.days > 1:
+            return f"{delta.days} days ago"
+        else:
+            return "1 day ago"
+
+    if hours:
+        if hours > 1:
+            return f"{hours} hours ago"
+        else:
+            return "1 hour ago"
+
+    if minutes:
+        if minutes > 1:
+            return f"{minutes} minutes ago"
+        else:
+            return "1 minute ago"
+
+    if seconds > 10:
+        return f"{seconds} seconds ago"
+    else:
+        return "just now"
+        
 
 def afk(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
@@ -38,25 +69,12 @@ def afk(update: Update, context: CallbackContext):
     else:
         reason = ""
 
-    # Set AFK status in the database
     sql.set_afk(update.effective_user.id, reason)
-
-    # Get the current time
-    afk_time = datetime.now()
-
-    # Inform the user that they are AFK
     fname = update.effective_user.first_name
     try:
         update.effective_message.reply_text("{} is now away!{}".format(fname, notice))
     except BadRequest:
         pass
-
-    # Return the AFK status along with duration and reason
-    afk_message = "I'm currently AFK!\n\n⏰ AFK Since: {}\n\n💬 Reason: {}".format(
-        str(afk_time - afk_time),  # Calculate duration since AFK
-        reason
-    )
-    update.effective_message.reply_text(afk_message)
 
 
 def no_longer_afk(update: Update, context: CallbackContext):
@@ -137,19 +155,23 @@ def reply_afk(update: Update, context: CallbackContext):
         check_afk(update, context, user_id, fst_name, userc_id)
 
 
-def check_afk(update, context, user_id, fst_name, userc_id):
+def check_afk(update: Update, context: CallbackContext, user_id: int, fst_name: str, userc_id: int):
     if sql.is_afk(user_id):
         user = sql.check_afk_status(user_id)
         if int(userc_id) == int(user_id):
             return
+
+        now = datetime.utcnow()
+        afk_time = user.time
+        delta = now - afk_time
+        time_since_afk = format_timedelta(delta)
+
         if not user.reason:
-            res = "{} is afk".format(fst_name)
-            update.effective_message.reply_text(res)
+            res = f"{fst_name} is afk.\nAfk Since: {time_since_afk}\nReason: None"
         else:
-            res = "{} is afk.\nReason: <code>{}</code>".format(
-                html.escape(fst_name), html.escape(user.reason)
-            )
-            update.effective_message.reply_text(res, parse_mode="html")
+            res = f"{fst_name} is afk.\nAfk Since: {time_since_afk}\nReason: {html.escape(user.reason)}"
+
+        update.effective_message.reply_text(res, parse_mode="html")
 
 
 __help__ = """
@@ -182,4 +204,4 @@ __handlers__ = [
     (AFK_REGEX_HANDLER, AFK_GROUP),
     (NO_AFK_HANDLER, AFK_GROUP),
     (AFK_REPLY_HANDLER, AFK_REPLY_GROUP),
-]
+    ]
